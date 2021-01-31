@@ -1,38 +1,13 @@
 function start!(r::Robot) # главная функция, благодаря которой стартует робот и выполняются все подфункции
     num_vert = moves!(r,Sud)
     num_hor = moves!(r,West) # передвигают робота в начальное положение, запоминая кол-во сделанных шагов
-    putmarkers!(r,Ost,11)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,10)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,9)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,8)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,7)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,6)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,5)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,4)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,3)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,2)
-    move_by_markers(r,inverse(Ost))
-    move!(r,Nord)
-    putmarkers!(r,Ost,1)
-    move_by_markers(r,inverse(Ost))
+    for x in (11,10,9,8,7,6,5,4,3,2,1)
+        putmarkers!(r,Ost,x)
+        move_by_markers(r,inverse(Ost))
+        if isborder(r,Nord)==false
+            move!(r,Nord)
+        end
+    end
     putmarker!(r) # ставит маркер в клетке, в которой находится
     putmarkers!(r,Sud) # ставит маркеры по пути к стенке на Юг
     moves!(r, Nord, num_vert)
@@ -58,7 +33,7 @@ function putmarkers!(r::Robot,side::HorizonSide) # ставит маркеры �
     end
 end
 function putmarkers!(r::Robot,side::HorizonSide,num_steps::Int) # ставит маркеры на выбранном направлении до стенки
-    for num_steps in 1:num_steps
+    for _ in 1:num_steps
         move!(r,side) # двигается по выбранной стороне
         putmarker!(r) # ставится маркер
     end

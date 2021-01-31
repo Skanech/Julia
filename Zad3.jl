@@ -2,15 +2,9 @@ function start!(r::Robot) # главная функция, благодаря к
     num_vert = moves!(r,Sud)
     num_hor = moves!(r,West) # передвигают робота в начальное положение, запоминая кол-во сделанных шагов
     while isborder(r,Nord)==false # пока на Севере свободно
-        if isborder(r,Ost)==false # если на Западе свободно
-            if ismarker(r)==false # если стоит маркер
-                putmarkers!(r,Ost) # вызывает функцию
-                move_by_markers(r,inverse(Ost)) # двигается по маркерам в обратном выбранному направлению после проставления маркеров дойдя до стенки
-                if isborder(r,Nord)==false # если на Севере свободно
-                    move!(r,Nord) # двигается на Север
-                end
-            end
-        end
+        putmarkers!(r,Ost) # вызывает функцию
+        move_by_markers(r,inverse(Ost)) # двигается по маркерам в обратном выбранному направлению после проставления маркеров дойдя до стенки
+        move!(r,Nord) # двигается на Север
     end
     putmarkers!(r,Ost) # вызывает функцию
     move_by_markers(r,inverse(Ost)) # двигается по маркерам в обратном выбранному направлению после проставления маркеров дойдя до стенки
